@@ -56,9 +56,10 @@ import pandas as pd
 st.header("🧑🏽‍🌾 Farm Work Plan Generator")
 
 # Inputs
-farm_size = st.number_input("Enter Farm Size (in acres)", value=5, step=1)
-mechanized = st.selectbox("Farming Mode", ["Manual", "Mechanized"])
-labor_type = st.selectbox("Primary Labor Type", ["Casual", "Seasonal", "Permanent", "Mixed"])
+with st.sidebar.expander("⚙️ Work Plan Settings", expanded=False):
+    farm_size = st.number_input("Enter Farm Size (in acres)", value=5, step=1)
+    mechanized = st.selectbox("Farming Mode", ["Manual", "Mechanized"])
+    labor_type = st.selectbox("Primary Labor Type", ["Casual", "Seasonal", "Permanent", "Mixed"])
 
 # Labor & Machinery Cost Estimations
 labor_cost_per_acre = 15000 if mechanized == "Manual" else 8000
