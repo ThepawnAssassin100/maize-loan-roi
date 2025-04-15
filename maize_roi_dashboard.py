@@ -50,6 +50,56 @@ ax2.set_title("Profit Sensitivity to Market Price")
 ax2.grid(True)
 st.pyplot(fig2)
 
+import plotly.express as px
+
+st.subheader("📆 Farm Activity Timeline (Gantt Style)")
+
+# Sample durations per task in weeks (adjust later as needed)
+activity_durations = {
+    "Land Preparation": 2,
+    "Planting": 1,
+    "Fertilizer Application": 1,
+    "Weeding": 2,
+    "Pest & Disease Control": 2,
+    "Harvesting": 1,
+    "Post-Harvest Handling": 1
+}
+
+import datetime
+today = datetime.date.today()
+start_date = today
+
+timeline_data = []
+
+for i, row in workplan.iterrows():
+    activity = row["Activity"]
+    duration = activity_durations.get(activity, 1)
+    start = start_date + datetime.timedelta(weeks=i*1)  # space by 1 week per activity
+    end = start + datetime.timedelta(weeks=duration)
+    
+    timeline_data.append({
+        "Task": activity,
+        "Start": start,
+        "Finish": end,
+        "Type": row["Labor Type"]
+    })
+
+timeline_df = pd.DataFrame(timeline_data)
+
+fig = px.timeline(
+    timeline_df,
+    x_start="Start",
+    x_end="Finish",
+    y="Task",
+    color="Type",
+    title="Farm Activity Timeline"
+)
+
+fig.update_yaxes(autorange="reversed")
+st.plotly_chart(fig, use_container_width=True)
+
+
+
 import streamlit as st
 import pandas as pd
 
