@@ -27,6 +27,43 @@ price_per_bag = st.sidebar.slider("Market Price per Bag (MWK)", 30000, 100000, 6
 loan_type = st.sidebar.selectbox("Loan Repayment Type", ["Bullet Repayment", "Installments (2x)"])
 include_insurance = st.sidebar.checkbox("Include Crop Insurance (5%)", value=True)
 st.subheader("📋 Editable Work Plan")
+st.subheader("📊 Work Plan Validation and Labor Cost Estimate")
+
+# Add columns to the table
+validated_rows = []
+for i, row in workplan.iterrows():
+    activity = row["Activity"]
+    start_week = int(row["Start Week"])
+    end_week = int(row["End Week"])
+    labor_type = row["Labor Type"]
+
+    # Check for errors
+    if end_week < start_week:
+        st.error(f"⚠️ '{activity}': End Week ({end_week}) is before Start Week ({start_week})!")
+        duration = 0
+    else:
+        duration = end_week - start_week + 1
+
+    # Cost estimate
+    if labor_type == "Tractor":
+        cost = labor_costs["Tractor"]
+    else:
+        cost = labor_costs[labor_type] * duration * 5  # assume 5 workers/day
+
+    validated_rows.append({
+        "Activity": activity,
+        "Labor Type": labor_type,
+        "Start Week": start_week,
+        "End Week": end_week,
+        "Duration (weeks)": duration,
+        "Estimated Cost (MWK)": cost
+    })
+
+validated_df = pd.DataFrame(validated_rows)
+st.dataframe(validated_df, use_container_width=True)
+
+total_labor_cost = validated_df["Estimated Cost (MWK)"].sum()
+st.success(f"💰 Total Estimated Labor Cost: MWK {total_labor_cost:,.0f}")
 
 # Editable input table
 with st.expander("Customize Your Work Plan"):
