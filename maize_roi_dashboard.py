@@ -89,11 +89,13 @@ st.title("Maize Loan ROI Calculator")
 st.sidebar.header("Input Parameters")
 acres = st.sidebar.number_input("Acres of Land", value=5)
 fertilizer_cost = st.sidebar.number_input("Fertilizer Cost per Acre", value=10000)
+fertilizer_cost = st.sidebar.number_input("Fertilizer Cost per Acre", value=15000, key="fertilizer_cost")
+seeds_cost = st.sidebar.number_input("Seeds Cost per Acre", value=5000, key="seeds_cost")
 seed_type = st.sidebar.selectbox("Seed Variety", ["Hybrid", "OPV", "Local"])
 min_yield = st.sidebar.number_input("Minimum Yield per Acre (kg)", value=200)
 max_yield = st.sidebar.number_input("Maximum Yield per Acre (kg)", value=800)
 tractor_used = st.sidebar.checkbox("Use Tractor for Plowing?")
-tractor_cost = st.sidebar.number_input("Tractor Cost per Acre", value=30000) if tractor_used else 0
+tractor_cost = st.sidebar.number_input("Tractor Cost per Acre", value=30000, key="tractor_cost")
 labor_cost = st.sidebar.number_input("Labor Cost per Acre", value=5000)
 
 # Add validation for max and min yield
