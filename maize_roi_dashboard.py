@@ -26,6 +26,33 @@ bags = st.sidebar.slider("Bags Harvested (50kg each)", 50, 250, 150)
 price_per_bag = st.sidebar.slider("Market Price per Bag (MWK)", 30000, 100000, 60000, step=1000)
 loan_type = st.sidebar.selectbox("Loan Repayment Type", ["Bullet Repayment", "Installments (2x)"])
 include_insurance = st.sidebar.checkbox("Include Crop Insurance (5%)", value=True)
+st.subheader("📋 Editable Work Plan")
+
+# Editable input table
+with st.expander("Customize Your Work Plan"):
+    default_plan = {
+        "Activity": [
+            "Land Preparation",
+            "Planting",
+            "Fertilizer Application",
+            "Weeding",
+            "Pest & Disease Control",
+            "Harvesting",
+            "Post-Harvest Handling"
+        ],
+        "Start Week": [1, 2, 3, 5, 6, 8, 9],
+        "End Week": [1, 2, 3, 5, 6, 8, 10],
+        "Labor Type": [
+            "Tractor", "Casual", "Casual", "Seasonal", "Casual", "Seasonal", "Seasonal"
+        ]
+    }
+
+    editable_df = pd.DataFrame(default_plan)
+    edited_df = st.data_editor(editable_df, num_rows="dynamic", use_container_width=True)
+
+# Assign back to workplan
+workplan = edited_df
+
 
 # --- Fixed values ---
 budget = 4452000
