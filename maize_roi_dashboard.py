@@ -2,6 +2,20 @@
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
+import pandas as pd
+import streamlit as st
+import plotly.express as px
+
+# --- Temporary Workplan Definition (REQUIRED) ---
+workplan = pd.DataFrame([
+    {"Activity": "Land Preparation", "Labor Type": "Tractor"},
+    {"Activity": "Planting", "Labor Type": "Casual"},
+    {"Activity": "Fertilizer Application", "Labor Type": "Casual"},
+    {"Activity": "Weeding", "Labor Type": "Seasonal"},
+    {"Activity": "Pest & Disease Control", "Labor Type": "Casual"},
+    {"Activity": "Harvesting", "Labor Type": "Seasonal"},
+    {"Activity": "Post-Harvest Handling", "Labor Type": "Seasonal"},
+])
 
 st.set_page_config(page_title="Maize Loan ROI Calculator -EEH IWOYI", layout="wide")
 st.title("🌽 Maize Production Loan & ROI Calculator")
