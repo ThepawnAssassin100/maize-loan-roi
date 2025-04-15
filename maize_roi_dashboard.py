@@ -64,6 +64,47 @@ activity_durations = {
     "Harvesting": 1,
     "Post-Harvest Handling": 1
 }
+st.subheader("💸 Cash Flow Tracker")
+
+# Assign cost per task (simplified - can be made editable later)
+cost_map = {
+    "Land Preparation": 60000,
+    "Planting": 30000,
+    "Fertilizer Application": 40000,
+    "Weeding": 20000,
+    "Pest & Disease Control": 15000,
+    "Harvesting": 25000,
+    "Post-Harvest Handling": 10000
+}
+
+# Income setup
+total_income = st.number_input("Expected Total Income from Maize Sales (MWK)", value=800000, step=10000)
+
+cashflow_data = []
+for i, row in workplan.iterrows():
+    activity = row["Activity"]
+    week = i + 1
+    cost = cost_map.get(activity, 0)
+    income = total_income if activity == "Post-Harvest Handling" else 0  # Income only at the end
+    cashflow_data.append({
+        "Week": f"Week {week}",
+        "Cost": cost,
+        "Income": income,
+        "Net Flow": income - cost
+    })
+
+cf_df = pd.DataFrame(cashflow_data)
+
+# Line chart style with bar overlay
+st.write("### Weekly Cash Flow Summary")
+fig = px.bar(cf_df, x="Week", y=["Cost", "Income"], barmode="group", title="Farm Cash Flow per Week")
+st.plotly_chart(fig, use_container_width=True)
+
+# Net Flow Line Chart
+fig2 = px.line(cf_df, x="Week", y="Net Flow", markers=True, title="Net Cash Flow Over Time")
+fig2.update_traces(line=dict(color="green", width=3))
+st.plotly_chart(fig2, use_container_width=True)
+
 # Temporary workplan table (replace later with your actual generator)
 workplan = pd.DataFrame([
     {"Activity": "Land Preparation", "Labor Type": "Tractor"},
