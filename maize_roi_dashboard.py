@@ -64,6 +64,16 @@ activity_durations = {
     "Harvesting": 1,
     "Post-Harvest Handling": 1
 }
+# Temporary workplan table (replace later with your actual generator)
+workplan = pd.DataFrame([
+    {"Activity": "Land Preparation", "Labor Type": "Tractor"},
+    {"Activity": "Planting", "Labor Type": "Casual"},
+    {"Activity": "Fertilizer Application", "Labor Type": "Casual"},
+    {"Activity": "Weeding", "Labor Type": "Seasonal"},
+    {"Activity": "Pest & Disease Control", "Labor Type": "Casual"},
+    {"Activity": "Harvesting", "Labor Type": "Seasonal"},
+    {"Activity": "Post-Harvest Handling", "Labor Type": "Seasonal"},
+])
 
 import datetime
 today = datetime.date.today()
