@@ -3,7 +3,7 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 
-st.set_page_config(page_title="Maize Loan ROI Calculator", layout="wide")
+st.set_page_config(page_title="Maize Loan ROI Calculator -EEH IWOYI", layout="wide")
 st.title("🌽 Maize Production Loan & ROI Calculator")
 
 # --- Inputs ---
@@ -106,6 +106,16 @@ fig2.update_traces(line=dict(color="green", width=3))
 st.plotly_chart(fig2, use_container_width=True)
 
 # Temporary workplan table (replace later with your actual generator)
+workplan = pd.DataFrame([
+    {"Activity": "Land Preparation", "Labor Type": "Tractor"},
+    {"Activity": "Planting", "Labor Type": "Casual"},
+    {"Activity": "Fertilizer Application", "Labor Type": "Casual"},
+    {"Activity": "Weeding", "Labor Type": "Seasonal"},
+    {"Activity": "Pest & Disease Control", "Labor Type": "Casual"},
+    {"Activity": "Harvesting", "Labor Type": "Seasonal"},
+    {"Activity": "Post-Harvest Handling", "Labor Type": "Seasonal"},
+])
+# Temporary workplan table (until full editable planner is added)
 workplan = pd.DataFrame([
     {"Activity": "Land Preparation", "Labor Type": "Tractor"},
     {"Activity": "Planting", "Labor Type": "Casual"},
