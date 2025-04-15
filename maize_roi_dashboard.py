@@ -49,6 +49,13 @@ with st.expander("Customize Your Work Plan"):
 
     editable_df = pd.DataFrame(default_plan)
     edited_df = st.data_editor(editable_df, num_rows="dynamic", use_container_width=True)
+st.sidebar.subheader("💼 Labor Cost Settings")
+
+labor_costs = {
+    "Tractor": st.sidebar.number_input("Cost per Acre - Tractor", value=30000),
+    "Casual": st.sidebar.number_input("Cost per Day - Casual Labor", value=2000),
+    "Seasonal": st.sidebar.number_input("Cost per Day - Seasonal Labor", value=2500)
+}
 
 # Assign back to workplan
 workplan = edited_df
