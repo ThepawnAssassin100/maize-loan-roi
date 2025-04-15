@@ -188,3 +188,42 @@ st.download_button(
     file_name="maize_loan_roi_report.csv",
     mime="text/csv"
 )
+import streamlit as st
+import pandas as pd
+
+st.header("🧑🏽‍🌾 Farm Work Plan Generator")
+
+# Inputs
+farm_size = st.number_input("Enter Farm Size (in acres)", value=5, step=1)
+mechanized = st.selectbox("Farming Mode", ["Manual", "Mechanized"])
+labor_type = st.selectbox("Primary Labor Type", ["Casual", "Seasonal", "Permanent", "Mixed"])
+
+# Labor & Machinery Cost Estimations
+labor_cost_per_acre = 15000 if mechanized == "Manual" else 8000
+tractor_cost_per_acre = 0 if mechanized == "Manual" else 30000
+
+# Sample Plan Template
+work_plan = [
+    {"Week": 1, "Task": "Land Clearing", "Description": "Remove weeds & prep land", "Labor": labor_type, "Cost/acre": 3000},
+    {"Week": 2, "Task": "Ploughing", "Description": "Use tractor or oxen", "Labor": "Machinery" if mechanized == "Mechanized" else labor_type, "Cost/acre": tractor_cost_per_acre},
+    {"Week": 3, "Task": "Planting", "Description": "Plant maize with basal fertilizer", "Labor": labor_type, "Cost/acre": 2000},
+    {"Week": 5, "Task": "Weeding (1st)", "Description": "Manual or herbicide application", "Labor": labor_type, "Cost/acre": 2500},
+    {"Week": 6, "Task": "Top Dressing", "Description": "Apply Urea/Nitrogen", "Labor": labor_type, "Cost/acre": 1800},
+    {"Week": 8, "Task": "Pest Control", "Description": "Inspect & spray as needed", "Labor": labor_type, "Cost/acre": 1000},
+    {"Week": 12, "Task": "Weeding (2nd)", "Description": "Remove weeds again", "Labor": labor_type, "Cost/acre": 2500},
+    {"Week": 16, "Task": "Harvesting", "Description": "Cut, dry, and bag", "Labor": "Mixed", "Cost/acre": 3000},
+    {"Week": 18, "Task": "Marketing", "Description": "Transport and sell maize", "Labor": "Owner", "Cost/acre": 1500},
+]
+
+# Scale Costs
+for task in work_plan:
+    task["Total Cost"] = task["Cost/acre"] * farm_size
+
+# Display Work Plan
+df_plan = pd.DataFrame(work_plan)
+st.subheader("📋 Weekly Work Plan")
+st.dataframe(df_plan[["Week", "Task", "Description", "Labor", "Total Cost"]], use_container_width=True)
+
+# Optional Export
+download_csv = df_plan.to_csv(index=False).encode('utf-8')
+st.download_button("📥 Download Work Plan (CSV)", data=download_csv, file_name="farm_work_plan.csv", mime='text/csv')
